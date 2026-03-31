@@ -1150,6 +1150,227 @@
       background: rgba(232,103,26,0.04);
     }
 
+  
+    /* ─── PRODUCT MODAL ─── */
+    .pmodal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(15,8,3,0.75);
+      backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .pmodal-overlay.open { display: flex; }
+    .pmodal-overlay.visible { opacity: 1; }
+
+    .pmodal {
+      background: var(--cream);
+      border-radius: 28px;
+      max-width: 960px;
+      width: 100%;
+      max-height: 92vh;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.45s cubic-bezier(0.34,1.3,0.64,1);
+    }
+    .pmodal-overlay.visible .pmodal { transform: scale(1) translateY(0); }
+
+    /* LEFT - IMAGE PANEL */
+    .pmodal-img-panel {
+      background: linear-gradient(145deg, #f0e6d8 0%, #e8d5be 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      perspective: 1000px;
+    }
+    .pmodal-img-panel::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(232,103,26,0.12) 0%, transparent 70%);
+    }
+    .pmodal-img-glow {
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,103,26,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      transition: transform 0.1s ease;
+    }
+    .pmodal-img-3d {
+      position: relative; z-index: 1;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease;
+      will-change: transform;
+    }
+    .pmodal-img-3d img {
+      max-height: 300px;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 30px 50px rgba(58,31,13,0.25));
+    }
+
+    /* RIGHT - INFO PANEL */
+    .pmodal-info {
+      padding: 52px 48px;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+
+    .pmodal-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(58,31,13,0.08);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      color: var(--brown);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 10;
+    }
+    .pmodal-close:hover { background: rgba(232,103,26,0.15); transform: rotate(90deg); }
+
+    .pmodal-category {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--orange);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .pmodal-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .pmodal-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--brown-mid);
+      margin-bottom: 24px;
+    }
+
+    .pmodal-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--orange), transparent);
+      margin-bottom: 24px;
+    }
+
+    .pmodal-price-row {
+      display: flex; align-items: baseline; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .pmodal-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--brown);
+      line-height: 1;
+    }
+    .pmodal-price sup { font-size: 1.2rem; }
+    .pmodal-price-label {
+      font-size: 0.75rem;
+      color: var(--brown-mid);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .pmodal-desc {
+      font-size: 0.9rem;
+      color: var(--brown-mid);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .pmodal-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 28px;
+    }
+    .pmodal-feature {
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .feature-dot {
+      width: 6px; height: 6px; flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--orange);
+      margin-top: 6px;
+    }
+    .feature-text { font-size: 0.78rem; color: var(--brown); line-height: 1.4; }
+
+    .pmodal-rating {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 28px;
+    }
+    .pmodal-stars { color: var(--orange); font-size: 0.85rem; letter-spacing: 2px; }
+    .pmodal-rating-count { font-size: 0.75rem; color: var(--brown-mid); }
+
+    .pmodal-actions { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+
+    .btn-pmodal-add {
+      width: 100%;
+      padding: 17px;
+      background: var(--brown);
+      color: var(--cream);
+      border: none;
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-pmodal-add:hover { background: var(--orange); transform: translateY(-2px); }
+
+    .btn-pmodal-order {
+      width: 100%;
+      padding: 17px;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      box-shadow: 0 8px 30px rgba(232,103,26,0.35);
+    }
+    .btn-pmodal-order:hover { background: var(--orange-dark); transform: translateY(-2px); }
+
+    .pmodal-badge-row {
+      display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap;
+    }
+    .pmodal-badge {
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .pmodal-badge-orange { background: rgba(232,103,26,0.12); color: var(--orange); }
+    .pmodal-badge-dark { background: rgba(58,31,13,0.08); color: var(--brown); }
+
+    @media (max-width: 700px) {
+      .pmodal { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
+      .pmodal-img-panel { min-height: 260px; padding: 32px; }
+      .pmodal-img-3d img { max-height: 200px; }
+      .pmodal-info { padding: 28px 24px; }
+      .pmodal-features { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -1281,7 +1502,7 @@
         <div class="product-footer">
           <div class="product-price">12<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('Clean Spray Pro', 12)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('Clean Spray Pro', 12)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('Clean Spray Pro', 12)">+</button>
         </div>
       </div>
     </div>
@@ -1295,7 +1516,7 @@
         <div class="product-footer">
           <div class="product-price">15<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('Shine Wax Premium', 15)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('Shine Wax Premium', 15)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('Shine Wax Premium', 15)">+</button>
         </div>
       </div>
     </div>
@@ -1310,7 +1531,7 @@
         <div class="product-footer">
           <div class="product-price">18<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('WaterShield Spray', 18)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('WaterShield Spray', 18)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('WaterShield Spray', 18)">+</button>
         </div>
       </div>
     </div>
@@ -1324,7 +1545,7 @@
         <div class="product-footer">
           <div class="product-price">22<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('ColorRestore Dye', 22)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('ColorRestore Dye', 22)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('ColorRestore Dye', 22)">+</button>
         </div>
       </div>
     </div>
@@ -1338,7 +1559,7 @@
         <div class="product-footer">
           <div class="product-price">19<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('Kit Brosses Pro', 19)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('Kit Brosses Pro', 19)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('Kit Brosses Pro', 19)">+</button>
         </div>
       </div>
     </div>
@@ -1353,7 +1574,7 @@
         <div class="product-footer">
           <div class="product-price">55<span>€</span></div>
           <button class="btn-view-detail" onclick="openPModal('Reshoes Starter Kit', 55)">✦ Découvrir le produit</button>
-        <button class="btn-add" onclick="addToCart('Reshoes Starter Kit', 55)">+</button>
+        <button class="btn-add" onclick="event.stopPropagation(); addToCart('Reshoes Starter Kit', 55)">+</button>
         </div>
       </div>
     </div>
@@ -1835,6 +2056,198 @@ document.addEventListener('keydown', e => {
     inner.style.transition = 'transform 0.5s ease';
   });
 })();
+
+
+
+  // ─── PRODUCT DATA ───
+  const PRODUCTS = [
+    {
+      id: 'clean-spray',
+      name: 'Clean Spray Pro',
+      tagline: 'La pureté à portée de main',
+      category: 'Nettoyant universel',
+      price: 12,
+      badges: ['Sans alcool', 'Vegan', 'Universel'],
+      desc: 'Formulé par des experts cordonniers, le Clean Spray Pro débarrasse vos chaussures de toutes les saletés sans altérer les matières. Sa mousse légère pénètre en profondeur pour un résultat éclatant.',
+      features: ['Compatible cuir, daim & toile','Formule sans alcool douce','Résultat visible en 2 minutes','Flacon 150 ml longue durée','Sans rinçage nécessaire','Parfum frais discret'],
+      rating: 4.9, reviews: 218,
+      imgKey: 'clean-spray',
+    },
+    {
+      id: 'shine-wax',
+      name: 'Shine Wax Premium',
+      tagline: 'L'éclat d'une finition parfaite',
+      category: 'Cirage & nourrissement',
+      price: 15,
+      badges: ['Formule premium', 'Cire naturelle', 'Longue durée'],
+      desc: 'Une crème nourrissante de haute qualité qui redonne profondeur et éclat au cuir lisse. Sa formule enrichie en cires naturelles restaure la couleur d'origine et crée un film protecteur durable.',
+      features: ['Cires d'abeille & carnauba','Restaure la couleur profonde','Protection contre l'humidité','Brillant intense longue durée','Senteur cuir premium','Pot 150ml rechargeable'],
+      rating: 4.8, reviews: 174,
+      imgKey: 'shine-wax',
+    },
+    {
+      id: 'water-shield',
+      name: 'WaterShield Spray',
+      tagline: 'Votre armure invisible',
+      category: 'Protection imperméabilisante',
+      price: 18,
+      badges: ['Invisible', '3 mois de protection', 'Nano-tech'],
+      desc: 'La technologie nano-imperméabilisante crée un bouclier invisible sur vos chaussures. Résistant à l'eau, à la boue et aux taches, il protège sans altérer la respirabilité ni l'aspect originel du cuir.',
+      features: ['Technologie nano-particules','Invisible après séchage','Résistance eau & boue','Protection jusqu'à 3 mois','Compatible toutes matières','Application facile en spray'],
+      rating: 4.9, reviews: 301,
+      imgKey: 'water-shield',
+    },
+    {
+      id: 'color-restore',
+      name: 'ColorRestore Dye',
+      tagline: 'Redonnez vie à vos couleurs',
+      category: 'Teinture restauratrice',
+      price: 22,
+      badges: ['12 teintes', 'Fixation durable', 'Pro'],
+      desc: 'Conçu pour les chaussures décolorées ou usées, le ColorRestore Dye pénètre les fibres du cuir pour restaurer une couleur uniforme et profonde. Disponible en 12 teintes soigneusement choisies pour s'adapter à toutes les nuances.',
+      features: ['12 teintes disponibles','Pénétration en profondeur','Fixation ultra durable','Rendu naturel et mat','Application au pinceau inclus','Résistant à l'eau après séchage'],
+      rating: 4.7, reviews: 139,
+      imgKey: 'color-restore',
+    },
+    {
+      id: 'brushes',
+      name: 'Kit Brosses Pro',
+      tagline: 'L'arsenal du professionnel',
+      category: 'Accessoires de soin',
+      price: 19,
+      badges: ['Poils naturels', 'Set 4 brosses', 'Artisanal'],
+      desc: 'Quatre brosses en poils naturels, sélectionnées et utilisées par les cordonniers professionnels. De la brosse de nettoyage à poils doux à la brosse de polissage en poils de sanglier, ce kit couvre toutes les étapes du soin.',
+      features: ['4 brosses aux fonctions dédiées','Poils naturels sanglier & crin','Manches en bois huilé','Nettoyage, lustrage & polissage','Compatible tous types de cuir','Coffret de rangement inclus'],
+      rating: 4.8, reviews: 96,
+      imgKey: 'brushes',
+    },
+    {
+      id: 'starter-kit',
+      name: 'Reshoes Starter Kit',
+      tagline: 'Tout ce qu'il vous faut, dès le départ',
+      category: 'Pack complet',
+      price: 55,
+      badges: ['Économisez 12€', 'Best-seller', 'Cadeau idéal'],
+      desc: 'Notre coffret signature réunit les essentiels pour une rénovation complète et professionnelle de vos chaussures. Un cadeau parfait ou le point de départ idéal pour prendre soin de vos paires comme un expert.',
+      features: ['Clean Spray Pro 150ml inclus','Shine Wax Premium 150ml inclus','Kit 4 brosses professionnelles','Chiffon de polissage microfibre','Guide de soin Lucas Capel','Coffret luxe Reshoes'],
+      rating: 5.0, reviews: 412,
+      imgKey: 'starter-kit',
+    },
+  ];
+
+  // Image map - will be populated after page load
+  const IMG_MAP = {};
+
+  function initImgMap() {
+    const imgEls = document.querySelectorAll('.product-img-wrap img');
+    const keys = ['clean-spray','shine-wax','water-shield','color-restore','brushes','starter-kit'];
+    imgEls.forEach((el, i) => {
+      if (keys[i]) IMG_MAP[keys[i]] = el.src;
+    });
+  }
+
+  // ─── MODAL LOGIC ───
+  function openProductModal(idx) {
+    const p = PRODUCTS[idx];
+    const overlay = document.getElementById('pmodal-overlay');
+    const imgSrc = IMG_MAP[p.imgKey] || '';
+
+    // Fill content
+    document.getElementById('pm-category').textContent = p.category;
+    document.getElementById('pm-name').textContent = p.name;
+    document.getElementById('pm-tagline').textContent = p.tagline;
+    document.getElementById('pm-price').textContent = p.price;
+    document.getElementById('pm-desc').textContent = p.desc;
+    document.getElementById('pm-img').src = imgSrc;
+    document.getElementById('pm-img').alt = p.name;
+
+    // Stars
+    const stars = '★'.repeat(Math.round(p.rating)) + '☆'.repeat(5 - Math.round(p.rating));
+    document.getElementById('pm-stars').textContent = stars;
+    document.getElementById('pm-reviews').textContent = p.reviews + ' avis';
+
+    // Badges
+    const badgeEl = document.getElementById('pm-badges');
+    badgeEl.innerHTML = p.badges.map((b,i) =>
+      `<span class="pmodal-badge ${i===0?'pmodal-badge-orange':'pmodal-badge-dark'}">${b}</span>`
+    ).join('');
+
+    // Features
+    const featEl = document.getElementById('pm-features');
+    featEl.innerHTML = p.features.map(f =>
+      `<div class="pmodal-feature"><div class="feature-dot"></div><div class="feature-text">${f}</div></div>`
+    ).join('');
+
+    // Store current product for add-to-cart
+    overlay.dataset.currentProduct = idx;
+
+    overlay.classList.add('open');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => overlay.classList.add('visible'));
+    });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProductModal() {
+    const overlay = document.getElementById('pmodal-overlay');
+    overlay.classList.remove('visible');
+    setTimeout(() => {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }, 350);
+  }
+
+  // ─── 3D TILT ───
+  function init3DTilt() {
+    const panel = document.querySelector('.pmodal-img-panel');
+    const img3d = document.querySelector('.pmodal-img-3d');
+    const glow = document.querySelector('.pmodal-img-glow');
+    if (!panel || !img3d) return;
+
+    panel.addEventListener('mousemove', (e) => {
+      const rect = panel.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      img3d.style.transform = `rotateY(${x * 22}deg) rotateX(${-y * 18}deg) scale(1.04)`;
+      if (glow) {
+        glow.style.left = (e.clientX - rect.left - 150) + 'px';
+        glow.style.top = (e.clientY - rect.top - 150) + 'px';
+      }
+    });
+
+    panel.addEventListener('mouseleave', () => {
+      img3d.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+    });
+  }
+
+  // ─── MODAL ADD TO CART ───
+  function modalAddToCart() {
+    const overlay = document.getElementById('pmodal-overlay');
+    const idx = parseInt(overlay.dataset.currentProduct);
+    const p = PRODUCTS[idx];
+    addToCart(p.name, p.price);
+  }
+
+  function modalOrder() {
+    closeProductModal();
+    setTimeout(() => {
+      document.getElementById('commander').scrollIntoView({ behavior: 'smooth' });
+    }, 400);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    initImgMap();
+    init3DTilt();
+
+    // Close on overlay click
+    document.getElementById('pmodal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeProductModal();
+    });
+    // ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeProductModal();
+    });
+  });
 
 </script><script>
   // ─── NAV SCROLL ───
